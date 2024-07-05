@@ -1,15 +1,9 @@
 from pathlib import Path
 import os
-import environ
 
-env = environ.Env()
-env.read_env(
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
-)
-
-API_KEY = os.environ("API_KEY")
-
-SECRET_KEY = os.environo("SECRET_KEY")
+# Read environment variables directly from Vercel environment
+API_KEY = os.environ.get("API_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
