@@ -29,12 +29,12 @@ def get_client_ip(request):
 def get_city(client_ip):
     g = GeoIP2()
     location = g.city(client_ip)
-    location_city = location["city"]
+    city = location["city"]
 
-    return location_city
+    return city
 
 
-def get_temperature(location_city):
+def get_temperature(city):
     # api_key = getattr(settings, "API_KEY", None)
     # if not api_key:
     #     raise ValueError("API_KEY is not set in settings.")
