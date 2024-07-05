@@ -34,7 +34,7 @@ def get_city(client_ip):
     return location_city
 
 
-def get_temperature(city):
+def get_temperature(location_city):
     # api_key = getattr(settings, "API_KEY", None)
     # if not api_key:
     #     raise ValueError("API_KEY is not set in settings.")
