@@ -36,7 +36,9 @@ def get_city(client_ip):
 
 
 def get_temperature(city):
-    api_key = settings.API_KEY
+    # api_key = settings.API_KEY
+    API_KEY = "edadf75d586f1b7214898ad91e2d6077"
+
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
 
     try:
