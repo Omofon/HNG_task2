@@ -6,6 +6,8 @@ from geoip2.database import Reader
 import os
 from django.conf import settings
 import logging
+# 
+from django.contrib.gis.geoip2 import GeoIP2
 
 logger = logging.getLogger(__name__)
 
@@ -25,13 +27,11 @@ def get_client_ip(request):
 
 
 def get_city(client_ip):
-    try:
-        reader = Reader(os.path.join(settings.GEOIP_PATH, "GeoLite2-City.mmdb"))
-        response = reader.city(client_ip)
-        return city
-    except Exception as e:
-        logger.error(f"GeoIP lookup error: {e}. Using default city: Lagos.")
-        return "Lagos"
+    g = GeoIP2()
+    location = g.city(client_ip)
+    location_city = location["city"]
+
+    return location_city
 
 
 def get_temperature(city):
