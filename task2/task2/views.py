@@ -1,4 +1,5 @@
 import urllib.request
+import urllib.parse
 import json
 from django.http import JsonResponse
 from ipware import get_client_ip as ipware_get_client_ip
@@ -27,19 +28,25 @@ def get_client_ip(request):
 
 
 def get_city(client_ip):
-    g = GeoIP2()
-    location = g.city(client_ip)
-    location_city = location["city"]
+    try:
+        reader = Reader(os.path.join(settings.GEOIP_PATH, "GeoLite2-City.mmdb"))
+        response = reader.city(client_ip)
+        city = response.city.name
+        if not city:
+            return "Abuja"
+        return city
+    except Exception as e:
+        logger.error(f"GeoIP lookup error: {e}. Using default city: Lagos.")
+        return "Lagos"
 
-    return location_city
 
-
-def get_temperature(location_city):
+def get_temperature(city):
     api_key = getattr(settings, "API_KEY", None)
+    city = urllib.parse.quote_plus(city)
     if not api_key:
         raise ValueError("API_KEY is not set in settings.")
 
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={location_city}&appid={api_key}"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
 
     try:
         response = urllib.request.urlopen(url)
@@ -52,7 +59,7 @@ def get_temperature(location_city):
         return round(temp_celsius, 2)
     except Exception as e:
         print(f"Error fetching temperature data: {e}")
-        return "Unknown temp"
+        return "Unknown temp, 25"
 
 
 def print_json(data):
