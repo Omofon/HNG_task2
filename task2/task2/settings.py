@@ -5,7 +5,9 @@ import os
 API_KEY = os.environ.get("API_KEY")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 DEBUG = True
 
@@ -21,6 +23,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "geoip2",
 ]
 
 MIDDLEWARE = [
@@ -53,7 +56,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "task2.wsgi.application"
 
-
 DATABASES = {}
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -71,10 +73,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -87,7 +85,4 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-GEOIP_PATH = os.path.join(BASE_DIR, "geoip")
-
-# print(f"SECRET_KEY: {env('SECRET_KEY')}")
-# print(f"API_KEY: {env('API_KEY')}")
+GEOIP_PATH = os.path.join('geoip')
