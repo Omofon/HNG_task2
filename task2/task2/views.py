@@ -28,7 +28,6 @@ def get_city(client_ip):
     try:
         reader = Reader(os.path.join(settings.GEOIP_PATH, "GeoLite2-City.mmdb"))
         response = reader.city(client_ip)
-        city = response.city.name if response.city.name else "Lagos"
         return city
     except Exception as e:
         logger.error(f"GeoIP lookup error: {e}. Using default city: Lagos.")
