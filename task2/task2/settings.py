@@ -3,16 +3,15 @@ import os
 import environ
 
 env = environ.Env()
-environ.Env.read_env()
+env.read_env(
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+)
 
 API_KEY = env("API_KEY")
 
 SECRET_KEY = env("SECRET_KEY")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-SECRET_KEY = os.environ("SECRET_KEY")
 
 DEBUG = True
 
@@ -94,4 +93,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-GEOIP_PATH = os.path.join(BASE_DIR, "task2", "geoip")
+GEOIP_PATH = os.path.join(BASE_DIR, "geoip")
+
+# print(f"SECRET_KEY: {env('SECRET_KEY')}")
+# print(f"API_KEY: {env('API_KEY')}")
