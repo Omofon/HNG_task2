@@ -29,18 +29,17 @@ def get_client_ip(request):
 def get_city(client_ip):
     g = GeoIP2()
     location = g.city(client_ip)
-    city = location["city"]
+    location_city = location["city"]
 
-    return city
+    return location_city
 
 
-def get_temperature(city):
-    # api_key = getattr(settings, "API_KEY", None)
-    # if not api_key:
-    #     raise ValueError("API_KEY is not set in settings.")
-    api_key = "edadf75d586f1b7214898ad91e2d6077"
+def get_temperature(location_city):
+    api_key = getattr(settings, "API_KEY", None)
+    if not api_key:
+        raise ValueError("API_KEY is not set in settings.")
 
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={location_city}&appid={api_key}"
 
     try:
         response = urllib.request.urlopen(url)
