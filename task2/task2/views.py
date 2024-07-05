@@ -27,17 +27,16 @@ def get_city(client_ip):
         client_ip = str(client_ip)
         response = reader.city(client_ip)
         city = response.city.name
-        if not city:
-            return "Lagos"
-        return city
+        
     except Exception as e:
         print(f"GeoIP lookup error: {e}. Using default city: Lagos.")
         return "Lagos"
 
 
 def get_temperature(city):
-    # api_key = settings.API_KEY
-    api_key = "edadf75d586f1b7214898ad91e2d6077"
+    api_key = getattr(settings, "API_KEY", None)
+    if not api_key:
+        raise ValueError("API_KEY is not set in settings.")
 
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
 
