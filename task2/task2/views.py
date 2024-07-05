@@ -33,11 +33,11 @@ def get_city(client_ip):
         response = reader.city(client_ip)
         city = response.city.name
         if not city:
-            return "Abuja"
+            return "Lagos"
         return city
     except Exception as e:
         logger.error(f"GeoIP lookup error: {e}. Using default city: Lagos.")
-        return "Lagos"
+        return "Error"
 
 
 def get_temperature(city):
