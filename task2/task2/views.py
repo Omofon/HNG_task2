@@ -5,6 +5,9 @@ from ipware import get_client_ip as ipware_get_client_ip
 from geoip2.database import Reader
 import os
 from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_visitor_name(request):
@@ -22,14 +25,13 @@ def get_client_ip(request):
 
 
 def get_city(client_ip):
-    reader = Reader(os.path.join(settings.GEOIP_PATH, "GeoLite2-City.mmdb"))
     try:
-        client_ip = str(client_ip)
+        reader = Reader(os.path.join(settings.GEOIP_PATH, "GeoLite2-City.mmdb"))
         response = reader.city(client_ip)
-        city = response.city.name
-        
+        city = response.city.name if response.city.name else "Lagos"
+        return city
     except Exception as e:
-        print(f"GeoIP lookup error: {e}. Using default city: Lagos.")
+        logger.error(f"GeoIP lookup error: {e}. Using default city: Lagos.")
         return "Lagos"
 
 
