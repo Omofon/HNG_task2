@@ -7,9 +7,9 @@ env.read_env(
     os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
 )
 
-API_KEY = env("API_KEY")
+API_KEY = os.environ("API_KEY")
 
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.environo("SECRET_KEY")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
